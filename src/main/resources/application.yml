@@ -1,1 +1,13 @@
-spring.application.name=Shopping
+server:
+  port: 8080
+spring:
+  application:
+    name: Shopping
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: true

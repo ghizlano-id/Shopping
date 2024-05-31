@@ -1,0 +1,26 @@
+services:
+  app:
+    image: shopping-api:1.0
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+      SPRING_DATASOURCE_URL: jdbc:h2://h2-db:1521/mydb
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: strongP@ssword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    ports:
+      - "8080:8080"
+    depends_on:
+      - h2-db
+
+  h2-db:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+    volumes:
+      - db-data:/h2-data
+
+volumes:
+  db-data:
