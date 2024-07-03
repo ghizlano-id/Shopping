@@ -1,6 +1,6 @@
 services:
   app:
-    image: shopping-api:1.0
+    image: shopping-app:1.0
     build:
       context: .
       dockerfile: Dockerfile

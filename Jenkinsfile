@@ -1,5 +1,9 @@
 pipeline{
     agent any
+    environment {
+        DOCKER_REGISTRY = 'ghizo1234'
+        IMAGE_NAME = 'my-shopping-app'
+    }
     tools {
         maven 'local_maven'
     }
@@ -15,6 +19,12 @@ pipeline{
                     archiveArtifacts artifacts: '**/target/*.jar'
                 }
             }
+        }
+        stage('Build Docker Image') {
+          steps{
+        	sh 'docker-compose build'
+            echo 'Build Image Completed'
+          }
         }
     }
 }
