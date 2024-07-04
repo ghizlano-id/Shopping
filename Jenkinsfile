@@ -34,6 +34,12 @@ pipeline{
         	echo 'Login Completed'
           }
         }
+        stage('Tag Docker Image') {
+          steps{
+            sh 'docker tag $IMAGE_NAME:$BUILD_NUMBER $DOCKER_REGISTRY/$IMAGE_NAME:$BUILD_NUMBER'
+            echo 'Tag Image Completed'
+          }
+        }
         stage('Push Image to Docker Hub') {
           steps{
         	sh 'docker push $DOCKER_REGISTRY/$IMAGE_NAME:$BUILD_NUMBER'
