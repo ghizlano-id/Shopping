@@ -2,7 +2,9 @@ pipeline{
     agent any
     environment {
         DOCKER_REGISTRY = 'ghizo1234'
-        IMAGE_NAME = 'my-shopping-app'
+        IMAGE_NAME = 'shopping-app'
+        BUILD_NUMBER = '1.0'
+        DOCKERHUB_CREDENTIALS= credentials('docker-hub')
     }
     tools {
         maven 'local_maven'
@@ -24,6 +26,18 @@ pipeline{
           steps{
         	sh 'docker-compose build'
             echo 'Build Image Completed'
+          }
+        }
+        stage('Login to Docker Hub') {
+          steps{
+        	sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+        	echo 'Login Completed'
+          }
+        }
+        stage('Push Image to Docker Hub') {
+          steps{
+        	sh 'docker push $DOCKER_REGISTRY/$IMAGE_NAME:$BUILD_NUMBER'
+            echo 'Push Image Completed'
           }
         }
     }
